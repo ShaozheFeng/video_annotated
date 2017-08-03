@@ -1,1 +1,4 @@
-first version
+first version 
+spent 2 hours.
+
+
