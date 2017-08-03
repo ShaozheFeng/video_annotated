@@ -15,6 +15,14 @@ def get_split_video(video_dir):
 if __name__ == '__main__':
     # get_split_video('/Users/fengshaozhe/Desktop/videos')
 
-    frame = file_tool.load_pickle('/Users/fengshaozhe/Projects/pycharm/video_annotated/data/12_0-4999.pkl')
-    annotator = Annotator()
-    annotator.label_video(frame)
+    crop_dir = './data'
+    for crop_file in os.listdir(crop_dir):
+        file_extension = os.path.splitext(crop_file)[1]
+        if file_extension == '.pkl':
+            crop_path = os.path.join(crop_dir, crop_file)
+            frame = file_tool.load_pickle(crop_path)
+            annotator = Annotator()
+            frame_label = annotator.label_video(frame)
+
+            label_name = 'label' + os.path.splitext(crop_file)[0]
+            file_tool.write_pickle(label_name, frame_label)

@@ -20,5 +20,5 @@ def load_pickle(file_path):
 
 
 def write_pickle(file_path, data):
-    with open(file_path, 'w')as f:
+    with open(file_path + '.pkl', 'w')as f:
         pickle.dump(data, f)
