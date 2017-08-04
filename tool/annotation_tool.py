@@ -10,7 +10,7 @@ class Annotator(object):
     def label_video(self, frame):
         frame_label = np.zeros(frame.shape[0])
         i = 0
-        is_play = True
+        is_play = False
         while True and i < len(frame):
             cv2.imshow('sample', frame[i])
             if is_play is True:
@@ -23,7 +23,8 @@ class Annotator(object):
                 break
             # left
             elif c == ord('j'):
-                i -= 1
+                if i != 0:
+                    i -= 1
             # right
             elif c == ord('l'):
                 i += 1
