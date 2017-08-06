@@ -18,10 +18,11 @@ if __name__ == '__main__':
     crop_dir = './data'
     for crop_file in os.listdir(crop_dir):
         file_extension = os.path.splitext(crop_file)[1]
+        file_name = os.path.splitext(crop_file)[0]
         if file_extension == '.pkl':
             crop_path = os.path.join(crop_dir, crop_file)
             frame = file_tool.load_pickle(crop_path)
-            annotator = Annotator()
+            annotator = Annotator(file_name)
             frame_label = annotator.label_video(frame)
 
             label_name = 'label' + os.path.splitext(crop_file)[0]

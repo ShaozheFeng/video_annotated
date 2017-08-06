@@ -22,9 +22,9 @@ def get_coordinate(video_path):
 
 
 def split_video(video_path, coordinate, dst_dir, use_crop=True):  # init the video param
+    SEGMENT_LENGTH = 5000
 
     video_name = os.path.splitext(video_path)[0].split('/')[-1]
-    SEGMENT_LENGTH = 5000
     left, top, right, bottom = coordinate
 
     video_reader = VideoReader(video_path)

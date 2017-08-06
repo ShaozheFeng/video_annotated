@@ -3,7 +3,8 @@ import cv2
 
 
 class Annotator(object):
-    def __init__(self):
+    def __init__(self, segment_name):
+        self.segment_name = segment_name
         pass
 
     # label the video
@@ -12,7 +13,11 @@ class Annotator(object):
         i = 0
         is_play = False
         while True and i < len(frame):
-            cv2.imshow('sample', frame[i])
+            # font = cv2.FONT_HERSHEY_SIMPLEX
+            # cv2.putText(frame, 'OpenCV', (0, 0), font, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
+            cv2.imshow(self.segment_name, frame[i])
+
             if is_play is True:
                 c = cv2.waitKey(10)
             else:
@@ -30,10 +35,10 @@ class Annotator(object):
                 i += 1
             elif c == ord('a'):
                 frame_label[i] = 1
-                print "goal!!!____", i
+                print str(i) + '---added'
             elif c == ord('r'):
                 frame_label[i] = 0
-                print "remove succeed~~~~", i
+                print str(i) + '---removed'
             # space
             elif c == 32:
                 is_play = not is_play
