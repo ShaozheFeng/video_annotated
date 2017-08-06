@@ -24,12 +24,12 @@ def get_coordinate(video_path):
 def split_video(video_path, coordinate, dst_dir, use_crop=True):  # init the video param
 
     video_name = os.path.splitext(video_path)[0].split('/')[-1]
-    segment_length = 5000
+    SEGMENT_LENGTH = 5000
     left, top, right, bottom = coordinate
 
     video_reader = VideoReader(video_path)
     frame_count = video_reader.get_frame_count()
-    seg_list = [x * segment_length for x in range(1, frame_count / segment_length + 2)]
+    seg_list = [x * SEGMENT_LENGTH for x in range(1, frame_count / SEGMENT_LENGTH + 2)]
 
     # split the video
     start_idx = 0
@@ -45,7 +45,7 @@ def split_video(video_path, coordinate, dst_dir, use_crop=True):  # init the vid
             total_frames.append(gray_frame)
 
         # save the segment
-        segment_name = video_name + '_' + str(start_idx).rjust(2, '0')
+        segment_name = video_name + '_' + str(start_idx / SEGMENT_LENGTH).rjust(2, '0')
         segment_path = os.path.join(dst_dir, segment_name)
         total_frames = np.array(total_frames)
         file_tool.write_pickle(segment_path, total_frames)
@@ -54,4 +54,4 @@ def split_video(video_path, coordinate, dst_dir, use_crop=True):  # init the vid
 
 
 if __name__ == '__main__':
-    split_video('/Users/fengshaozhe/Desktop/12.mp4', (594, 18, 747, 180), './')
+    split_video('/Users/fengshaozhe/Desktop/videos/12.mp4', (594, 18, 747, 180), './')
