@@ -27,3 +27,4 @@ if __name__ == '__main__':
 
             label_name = 'label' + os.path.splitext(crop_file)[0]
             file_tool.write_pickle(label_name, frame_label)
+            #
