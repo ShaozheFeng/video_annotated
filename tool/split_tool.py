@@ -53,5 +53,20 @@ def split_video(video_path, coordinate, dst_dir, use_crop=True):  # init the vid
         start_idx = end_idx
 
 
+def get_hoop_img(big_img_dir, dst_dir):
+    for big_img_name in os.listdir(big_img_dir):
+        big_img_path = os.path.join(big_img_dir, big_img_name)
+        big_imgs = file_tool.load_pickle('/Users/fengshaozhe/Projects/pycharm/basketball/video_annotated/data/big_imgs/01_00.pkl')
+
+        drawer = Drawer(big_imgs[0])
+        coordinate, _ = drawer.show_res()
+        left, top, right, bottom = coordinate
+
+        crop_imgs = big_imgs[:, top:bottom, left:right]
+        file_tool.write_pickle(dst_dir, crop_imgs)
+
+
 if __name__ == '__main__':
-    split_video('/Users/fengshaozhe/Desktop/videos/12.mp4', (594, 18, 747, 180), './')
+    big_img_dir = os.path.join('data', 'big_imgs')
+    dst_dir = os.path.join('data', 'hoop_imgs')
+    get_hoop_img(big_img_dir, dst_dir)
