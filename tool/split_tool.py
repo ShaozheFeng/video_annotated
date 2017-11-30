@@ -5,7 +5,7 @@ import os
 import numpy as np
 from tool.drawer import Drawer
 
-
+sep = os.path.sep
 #
 # class SplitVideo():
 #     def __index__(self, video_path, coordinate, dst_dir, use_crop=True):
@@ -24,7 +24,7 @@ def get_coordinate(video_path):
 def split_video(video_path, coordinate, dst_dir, use_crop=True):  # init the video param
     SEGMENT_LENGTH = 5000
 
-    video_name = os.path.splitext(video_path)[0].split('/')[-1]
+    video_name = os.path.splitext(video_path)[0].split(sep)[-1]
     left, top, right, bottom = coordinate
 
     video_reader = VideoReader(video_path)
@@ -54,16 +54,28 @@ def split_video(video_path, coordinate, dst_dir, use_crop=True):  # init the vid
 
 
 def get_hoop_img(big_img_dir, dst_dir):
+    coordinate = None
     for big_img_name in os.listdir(big_img_dir):
         big_img_path = os.path.join(big_img_dir, big_img_name)
-        big_imgs = file_tool.load_pickle('/Users/fengshaozhe/Projects/pycharm/basketball/video_annotated/data/big_imgs/01_00.pkl')
+        big_imgs = file_tool.load_pickle(big_img_path)
 
-        drawer = Drawer(big_imgs[0])
-        coordinate, _ = drawer.show_res()
-        left, top, right, bottom = coordinate
+        if not coordinate:
+            drawer = Drawer(big_imgs[0])
+            coordinate, _ = drawer.show_res()
+            left, top, right, bottom = coordinate
+
+            cv2.imshow('hoop', big_imgs[0, top:bottom, left:right])
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
         crop_imgs = big_imgs[:, top:bottom, left:right]
-        file_tool.write_pickle(dst_dir, crop_imgs)
+        resize_imgs = []
+        for i in range(crop_imgs.shape[0]):
+            resize_imgs.append(cv2.resize(crop_imgs[i], (40, 40)))
+
+        resize_imgs = np.array(resize_imgs)
+        dst_path = os.path.join(dst_dir, 'hoop_' + os.path.splitext(big_img_name)[0])
+        file_tool.write_pickle(dst_path, resize_imgs)
 
 
 if __name__ == '__main__':
