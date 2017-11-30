@@ -70,5 +70,4 @@ if __name__ == '__main__':
     stride = eval(cf.get('descriptor', 'stride'))
     cell_size = eval(cf.get('descriptor', 'cell_size'))
     nbins = cf.getint('descriptor', 'nbins')
-
-
+    print ''
