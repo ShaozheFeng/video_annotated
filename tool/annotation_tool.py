@@ -35,14 +35,17 @@ class Annotator(object):
                 i += 1
             elif c == ord('a'):
                 frame_label[i] = 1
-                print str(i) + '---added'
+                print(str(i) + '---added')
             elif c == ord('r'):
                 frame_label[i] = 0
-                print str(i) + '---removed'
+                print (str(i) + '---removed')
+            elif c == ord('h'):
+                frame_label[i] = 2
+                print(str(i) + '---hard')
             # space
             elif c == 32:
                 is_play = not is_play
-                print is_play
+                print (is_play)
             if is_play is True:
                 i += 1
 
